@@ -1,0 +1,16 @@
+<?php 
+require("business/Administrator.php");
+require("business/LogAdministrator.php");
+require("business/LogEvaluador.php");
+require("business/Evaluador.php");
+require("business/LogParticipante.php");
+require("business/Participante.php");
+require("business/ProgramaAcademico.php");
+require("business/Esquema.php");
+require("business/Value.php");
+require("business/Respuesta.php");
+require("business/Pregunta.php");
+require("business/Cuestionario.php");
+$pid=base64_decode($_GET['pid']);
+include($pid);
+?>
