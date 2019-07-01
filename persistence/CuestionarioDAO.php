@@ -51,6 +51,11 @@ class CuestionarioDAO{
 				where participante_idParticipante = '" . $this -> participante . "'
 				order by " . $orden . " " . $dir;
 	}
+	function search($search) {
+	    return "select idCuestionario, respuesta, participante_idParticipante
+				from Cuestionario
+				where idCuestionario like '%" . $search . "%'";
+	}
 
 	function delete(){
 		return "delete from Cuestionario

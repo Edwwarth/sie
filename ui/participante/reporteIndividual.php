@@ -1,3 +1,8 @@
+<?php 
+if($_SESSION['entity'] != null && $_SESSION['entity'] == 'Participante'){
+    echo "<script>document.getElementsByTagName('body')[0].className='app header-fixed sidebar-fixed aside-menu-fixed pace-done'</script>";
+}
+?>
 <div class="container">
 	<div class="row">
     	<div class="col-md-2"></div>

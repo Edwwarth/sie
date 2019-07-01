@@ -3,86 +3,6 @@ $processed=false;
 $idCuestionario = $_GET['idCuestionario'];
 $updateCuestionario = new Cuestionario($idCuestionario);
 $updateCuestionario -> select();
-$descripcion="";
-if(isset($_POST['descripcion'])){
-    $descripcion=$_POST['descripcion'];
-}
-$participante="";
-if(isset($_POST['participante'])){
-    $participante=$_POST['participante'];
-}
-
-$preguntasPost = array();
-if(isset($_POST['pregunta'])){
-    $preguntasPost = $_POST['pregunta'];
-}
-
-$respuestasPost = array();
-if(isset($_POST['respuesta'])){
-    $respuestasPost = $_POST['respuesta'];
-}
-
-$idCuestionarioPreg = array();
-if(isset($_POST['idCuestionarioPreg'])){
-    $idCuestionarioPreg = $_POST['idCuestionarioPreg'];
-}
-
-if(isset($_POST['update'])){
-    if($preguntasPost != null && count($preguntasPost)>0 && $respuestasPost != null && count($respuestasPost)>0){
-        /**
-         * Must be same length
-         * */
-        if(count($preguntasPost) == count($respuestasPost)){
-            for($i = 0; $i < count($respuestasPost); $i++){
-                $pregunta = new Pregunta($preguntasPost[$i]);
-                $pregunta -> select();
-                /**
-                 * After seach for the correct answer for each question
-                 * Compare correct answer
-                 * Can avoided with trigger
-                 * */
-                $updateCuestionarioPregunta = new Esquema($idCuestionarioPreg[$i], $preguntasPost[$i], $respuestasPost[$i] , $idCuestionario);
-                $updateCuestionarioPregunta -> update();
-                $updateCuestionarioPregunta -> select();
-            }
-        }
-    }
-    $updateCuestionario = new Cuestionario($idCuestionario, $descripcion, $participante);
-    $updateCuestionario -> update();
-    $updateCuestionario -> select();
-    $objParticipante = new Participante($participante);
-    $objParticipante -> select();
-    $nameParticipante = $objParticipante -> getNombre() . " " . $objParticipante -> getApellido() ;
-    $user_ip = getenv('REMOTE_ADDR');
-    $agent = $_SERVER["HTTP_USER_AGENT"];
-    $browser = "-";
-    if( preg_match('/MSIE (\d+\.\d+);/', $agent) ) {
-        $browser = "Internet Explorer";
-    } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $agent) ) {
-        $browser = "Chrome";
-    } else if (preg_match('/Edge\/\d+/', $agent) ) {
-        $browser = "Edge";
-    } else if ( preg_match('/Firefox[\/\s](\d+\.\d+)/', $agent) ) {
-        $browser = "Firefox";
-    } else if ( preg_match('/OPR[\/\s](\d+\.\d+)/', $agent) ) {
-        $browser = "Opera";
-    } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $agent) ) {
-        $browser = "Safari";
-    }
-    if($_SESSION['entity'] == 'Administrator'){
-        $logAdministrator = new LogAdministrator("","Edit Cuestionario", "Descripcion: " . $descripcion . ";; Participante: " . $nameParticipante, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
-        $logAdministrator -> insert();
-    }
-    else if($_SESSION['entity'] == 'Evaluador'){
-        $logEvaluador = new LogEvaluador("","Edit Cuestionario", "Descripcion: " . $descripcion . ";; Participante: " . $nameParticipante, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
-        $logEvaluador -> insert();
-    }
-    else if($_SESSION['entity'] == 'Participante'){
-        $logParticipante = new LogParticipante("","Edit Cuestionario", "Descripcion: " . $descripcion . ";; Participante: " . $nameParticipante, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
-        $logParticipante -> insert();
-    }
-    $processed=true;
-}
 ?>
 <ol class="breadcrumb">
     <li class="breadcrumb-item">Inicio</li>
@@ -215,7 +135,6 @@ if(isset($_POST['update'])){
 						<?php }
 						echo "<input type='hidden' id='NroPreg' name='NroPreg' value=" . $counter . ">";
 						?>
-						<button type="submit" class="btn" name="update">Editar</button>
 					</form>
 				</div>
 			</div>

@@ -60,17 +60,28 @@ if(isset($_POST['insert'])){
         $logParticipante -> insert();
     }
     $processed=true;
+    if($_SESSION['entity'] != null && $_SESSION['entity'] == 'Participante'){
+        echo "<script>location.href = 'index.php?pid=" . base64_encode("ui/participante/reporteIndividual.php") . "&idCuestionario=" . $nextId . "'</script>";
+    }
 }
 ?>
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">Inicio</li>
-    <li class="breadcrumb-item">Cuestionario</li>
-	<li class="breadcrumb-item active">Ingresar Cuestionario</li>
-	<li class="breadcrumb-menu d-md-down-none">
-		<div class="btn-group" role="group" aria-label="Button group">
-		</div>
-	</li>
-</ol>
+<?php 
+if($_SESSION['entity'] != null && $_SESSION['entity'] != 'Participante'){
+    ?>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Inicio</li>
+        <li class="breadcrumb-item">Cuestionario</li>
+    	<li class="breadcrumb-item active">Ingresar Cuestionario</li>
+    	<li class="breadcrumb-menu d-md-down-none">
+    		<div class="btn-group" role="group" aria-label="Button group">
+    		</div>
+    	</li>
+    </ol>
+    <?php
+}else{
+    echo "<script>document.getElementsByTagName('body')[0].className='app header-fixed sidebar-fixed aside-menu-fixed pace-done'</script>";
+}
+?>
 <div class="container">
 	<div class="row">
 		<div class="col-md-2"></div>
@@ -90,13 +101,17 @@ if(isset($_POST['insert'])){
 					<form id="form" method="post" action="index.php?pid=<?php echo base64_encode("ui/cuestionario/insertCuestionario.php") ?>" class="bootstrap-form needs-validation" novalidate  >
 						<div class="form-group">
 							<label>Participante*</label>
-							<select class="form-control" name="participante">
 								<?php
 								if($_SESSION['entity'] != null && $_SESSION['entity'] == "Participante"){
 									$participante = new Participante($_SESSION['id']);
 									$participante -> select();
-									echo "<input type=\"text\" class=\"form-control\" name=\"participante\" value=" . $participante->getNombre() . " " . $participante->getApellido() . " required readonly />";
+									echo "<select class='form-control' name='participante'>";
+									echo "<option value='" . $participante -> getIdParticipante() . "'";
+									echo " selected";
+									echo ">" . $participante -> getNombre() . " " . $participante -> getApellido() . "</option>";
+									echo "</select>";
 								}else{
+								    echo "<select class='form-control' name='participante'>";
 									$objParticipante = new Participante();
 									$participantes = $objParticipante -> selectAll();
 									foreach($participantes as $currentParticipante){
@@ -106,9 +121,9 @@ if(isset($_POST['insert'])){
 										}
 										echo ">" . $currentParticipante -> getNombre() . " " . $currentParticipante -> getApellido() . "</option>";
 									}
+									echo "</select>";
 								}
 								?>
-							</select>
 						</div>
 						<label>Preguntas</label>
 						<?php 
@@ -174,7 +189,7 @@ if(isset($_POST['insert'])){
 						  echo "<input type='hidden' id='NroPreg' name='NroPreg' value=" . $counter . ">";
 						  ?>
 						<!-- onclick="return validateSubmit()" -->
-						<button type="submit" class="btn" name="insert" >Crear</button>
+						<button type="submit" class="btn" name="insert" >Ingresar</button>
 					</form>
 				</div>
 			</div>

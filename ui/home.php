@@ -27,7 +27,7 @@ if(isset($_POST['logIn'])){
 			$logAdministrator = new LogAdministrator("", "Log In", "", date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $administrator -> getIdAdministrator());
 			$logAdministrator -> insert();
 			//Redirect to reports ?
-			echo "<script>location.href = 'index.php?pid=" . base64_encode("ui/sessionAdministrator.php") . "'</script>"; 
+			echo "<script>location.href = 'index.php?pid=" . base64_encode("ui/cuestionario/reportAllCuestionarios.php") . "'</script>"; 
 		}
 		$evaluador = new Evaluador();
 		if($evaluador -> logIn($email, $password)){
@@ -36,7 +36,7 @@ if(isset($_POST['logIn'])){
 			$logEvaluador = new LogEvaluador("", "Log In", "", date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $evaluador -> getIdEvaluador());
 			$logEvaluador -> insert();
 			//Redirect to reports ?
-			echo "<script>location.href = 'index.php?pid=" . base64_encode("ui/sessionEvaluador.php") . "'</script>"; 
+			echo "<script>location.href = 'index.php?pid=" . base64_encode("ui/cuestionario/reportAllCuestionarios.php") . "'</script>"; 
 		}
 		$participante = new Participante();
 		if($participante -> logIn($email, $password)){
@@ -45,7 +45,7 @@ if(isset($_POST['logIn'])){
 			$logParticipante = new LogParticipante("", "Log In", "", date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $participante -> getIdParticipante());
 			$logParticipante -> insert();
 			//Redirect to reports ?
-			echo "<script>location.href = 'index.php?pid=" . base64_encode("ui/sessionParticipante.php") . "'</script>"; 
+			echo "<script>location.href = 'index.php?pid=" . base64_encode('ui/cuestionario/insertCuestionario.php') . "'</script>"; 
 		}
 		$logInError=true;
 	}

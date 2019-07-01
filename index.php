@@ -75,6 +75,7 @@ $webPages = array(
 	'ui/esquema/selectAllEsquemaByCuestionario.php',
     'ui/participante/reporteIndividual.php',
     'ui/cuestionario/reportAllCuestionarios.php',
+    'ui/cuestionario/detailCuestionario.php',
 );
 if(isset($_GET['logOut'])){
 	$_SESSION['id']="";
@@ -149,7 +150,7 @@ if(isset($_GET['logOut'])){
 	?>
 	<footer class="app-footer">
 		<div>
-			<a href="">BDA</a> <span>&copy; 2019 Universidad Distrital.</span>
+			<a href="">SIE</a> <span>&copy; 2019 Universidad Distrital.</span>
 		</div>
 		<div class="ml-auto">
 			<span>Powered by</span> <a href="">Universidad Distrital</a>

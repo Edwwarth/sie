@@ -62,6 +62,7 @@ $webPages = array(
     'ui/esquema/selectAllEsquemaByCuestionario.php',
     'ui/participante/reporteIndividual.php',
     'ui/cuestionario/reportAllCuestionarios.php',
+    'ui/cuestionario/detailCuestionario.php',
 );
 if (isset($_GET['logOut'])) {
     $_SESSION['id'] = "";
@@ -71,7 +72,7 @@ if (isset($_GET['logOut'])) {
     <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="index.php?pid=<?php echo base64_encode("ui/sessionAdministrator.php") ?>">
+    <a class="navbar-brand" href="index.php?pid=<?php echo base64_encode("ui/cuestionario/reportAllCuestionarios.php") ?>">
         <img class="navbar-brand-full" src="img/logo.png" width="80" height="70" alt="">
         <img class="navbar-brand-minimized" src="putSomeLogoPlox" width="30" height="30" alt="">
     </a>
@@ -79,7 +80,7 @@ if (isset($_GET['logOut'])) {
         <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="nav navbar-nav d-md-down-none">
-        <li class="nav-item px-3"><a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/sessionAdministrator.php") ?>">Dashboard</a></li>
+        <li class="nav-item px-3"><a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/cuestionario/reportAllCuestionarios.php") ?>">Dashboard</a></li>
     </ul>
     <!-- NavBar, the firts column -->
     <ul class="nav navbar-nav ml-auto">
@@ -122,15 +123,15 @@ if (isset($_GET['logOut'])) {
                     </a>
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/administrator/insertAdministrator.php") ?>"> <i class="nav-icon icon-cursor"></i> Crear administrador
+                            <a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/administrator/insertAdministrator.php") ?>"> <i class="nav-icon icon-cursor"></i> Crear Administrador
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/administrator/selectAllAdministrator.php") ?>"> <i class="nav-icon icon-cursor"></i> Consultar administradores
+                            <a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/administrator/selectAllAdministrator.php") ?>"> <i class="nav-icon icon-cursor"></i> Consultar Administradores
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/administrator/searchAdministrator.php") ?>"> <i class="nav-icon icon-cursor"></i> Buscar administrador
+                            <a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/administrator/searchAdministrator.php") ?>"> <i class="nav-icon icon-cursor"></i> Buscar Administrador
                             </a>
                         </li>
                     </ul>
@@ -221,8 +222,7 @@ if (isset($_GET['logOut'])) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <!-- index.php?pid= echo base64_encode("ui/cuestionario/searchCuestionario.php") ?> -->
-                            <a class="nav-link" href=""> <i class="nav-icon icon-cursor"></i> Buscar Cuestionario
+                            <a class="nav-link" href="index.php?pid=<?php echo base64_encode("ui/cuestionario/searchCuestionario.php") ?>"> <i class="nav-icon icon-cursor"></i> Consultar Cuestionarios
                             </a>
                         </li>
                     </ul>
@@ -249,8 +249,6 @@ if (isset($_GET['logOut'])) {
 
     	if (!empty($_GET['pid'])) {
             $pid = base64_decode($_GET['pid']);
-            //echo $pid;
-            //print_r($webPages);
     	    if (in_array($pid, $webPages)) {
     	        include($pid);
     	    } else {
