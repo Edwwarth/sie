@@ -17,14 +17,6 @@ class Cuestionario {
 		$this -> idCuestionario = $pIdCuestionario;
 	}
 
-	function getRespuesta() {
-		return $this -> respuesta;
-	}
-
-	function setRespuesta($pRespuesta) {
-		$this -> respuesta = $pRespuesta;
-	}
-
 	function getParticipante() {
 		return $this -> participante;
 	}
@@ -33,11 +25,10 @@ class Cuestionario {
 		$this -> participante = $pParticipante;
 	}
 
-	function Cuestionario($pIdCuestionario = "", $pRespuesta = "", $pParticipante = ""){
+	function Cuestionario($pIdCuestionario = "", $pParticipante = ""){
 		$this -> idCuestionario = $pIdCuestionario;
-		$this -> respuesta = $pRespuesta;
 		$this -> participante = $pParticipante;
-		$this -> cuestionarioDAO = new CuestionarioDAO($this -> idCuestionario, $this -> respuesta, $this -> participante);
+		$this -> cuestionarioDAO = new CuestionarioDAO($this -> idCuestionario, $this -> participante);
 		$this -> connection = new Connection();
 	}
 
@@ -59,8 +50,7 @@ class Cuestionario {
 		$result = $this -> connection -> fetchRow();
 		$this -> connection -> close();
 		$this -> idCuestionario = $result[0];
-		$this -> respuesta = $result[1];
-		$participante = new Participante($result[2]);
+		$participante = new Participante($result[1]);
 		$participante -> select();
 		$this -> participante = $participante;
 	}
@@ -70,9 +60,9 @@ class Cuestionario {
 		$this -> connection -> run($this -> cuestionarioDAO -> selectAll());
 		$cuestionarios = array();
 		while ($result = $this -> connection -> fetchRow()){
-			$participante = new Participante($result[2]);
+			$participante = new Participante($result[1]);
 			$participante -> select();
-			array_push($cuestionarios, new Cuestionario($result[0], $result[1], $participante));
+			array_push($cuestionarios, new Cuestionario($result[0], $participante));
 		}
 		$this -> connection -> close();
 		return $cuestionarios;
@@ -83,9 +73,9 @@ class Cuestionario {
 		$this -> connection -> run($this -> cuestionarioDAO -> selectAllByParticipante());
 		$cuestionarios = array();
 		while ($result = $this -> connection -> fetchRow()){
-			$participante = new Participante($result[2]);
+			$participante = new Participante($result[1]);
 			$participante -> select();
-			array_push($cuestionarios, new Cuestionario($result[0], $result[1], $participante));
+			array_push($cuestionarios, new Cuestionario($result[0], $participante));
 		}
 		$this -> connection -> close();
 		return $cuestionarios;
@@ -96,9 +86,9 @@ class Cuestionario {
 		$this -> connection -> run($this -> cuestionarioDAO -> selectAllOrder($order, $dir));
 		$cuestionarios = array();
 		while ($result = $this -> connection -> fetchRow()){
-			$participante = new Participante($result[2]);
+			$participante = new Participante($result[1]);
 			$participante -> select();
-			array_push($cuestionarios, new Cuestionario($result[0], $result[1], $participante));
+			array_push($cuestionarios, new Cuestionario($result[0], $participante));
 		}
 		$this -> connection -> close();
 		return $cuestionarios;
@@ -109,9 +99,9 @@ class Cuestionario {
 		$this -> connection -> run($this -> cuestionarioDAO -> selectAllByParticipanteOrder($order, $dir));
 		$cuestionarios = array();
 		while ($result = $this -> connection -> fetchRow()){
-			$participante = new Participante($result[2]);
+			$participante = new Participante($result[1]);
 			$participante -> select();
-			array_push($cuestionarios, new Cuestionario($result[0], $result[1], $participante));
+			array_push($cuestionarios, new Cuestionario($result[0], $participante));
 		}
 		$this -> connection -> close();
 		return $cuestionarios;
@@ -122,9 +112,9 @@ class Cuestionario {
 		$this -> connection -> run($this -> cuestionarioDAO -> search($search));
 		$cuestionarios = array();
 		while ($result = $this -> connection -> fetchRow()){
-			$participante = new Participante($result[2]);
+			$participante = new Participante($result[1]);
 			$participante -> select();
-			array_push($cuestionarios, new Cuestionario($result[0], $result[1], $participante));
+			array_push($cuestionarios, new Cuestionario($result[0], $participante));
 		}
 		$this -> connection -> close();
 		return $cuestionarios;

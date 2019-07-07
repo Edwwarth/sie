@@ -9,6 +9,7 @@ require("business/Participante.php");
 require("business/ProgramaAcademico.php");
 require("business/Esquema.php");
 require("business/Value.php");
+require("business/Valor.php");
 require("business/Respuesta.php");
 require("business/Pregunta.php");
 require("business/Cuestionario.php");
@@ -56,7 +57,7 @@ $webPages = array(
 	'ui/value/insertValue.php',
 	'ui/value/updateValue.php',
 	'ui/value/selectAllValue.php',
-	'ui/value/searchValue.php',
+    'ui/value/searchValue.php',
 	'ui/respuesta/insertRespuesta.php',
 	'ui/respuesta/updateRespuesta.php',
 	'ui/respuesta/selectAllRespuesta.php',

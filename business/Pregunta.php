@@ -102,5 +102,13 @@ class Pregunta {
 	    $this -> connection -> close();
 	    return $preguntas;
 	}
+	
+	function getNextAutoI(){
+	    $this -> connection -> open();
+	    $this -> connection ->run($this -> preguntaDAO -> getNextAuto());
+	    $result = $this -> connection -> fetchRow();
+	    $this -> connection -> close();
+	    return $result;
+	}
 }
 ?>

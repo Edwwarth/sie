@@ -81,9 +81,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					} else {
 						$esquemas = $esquema -> selectAllByRespuesta();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($esquemas as $currentEsquema) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentEsquema -> getPregunta() -> getPregunta() . "</td>";
 						echo "<td>" . $currentEsquema -> getRespuesta() -> getTipo() . " " . $currentEsquema -> getRespuesta() -> getValor() . "</td>";
 						echo "<td>" . $currentEsquema -> getCuestionario() -> getRespuesta() . "</td>";
@@ -96,7 +96,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					};
 					?>
 				</tbody>

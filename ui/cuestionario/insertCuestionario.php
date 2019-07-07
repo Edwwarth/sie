@@ -7,23 +7,23 @@ if(isset($_POST['participante'])){
 if(isset($_GET['idParticipante'])){
     $participante=$_GET['idParticipante'];
 }
-$preguntasPost = array();
+$tipos = array();
 if(isset($_POST['pregunta'])){
-    $preguntasPost = $_POST['pregunta'];
+    $tipos = $_POST['pregunta'];
 }
-$respuestasPost = array();
+$respuestaValores = array();
 if(isset($_POST['respuesta'])){
-    $respuestasPost = $_POST['respuesta'];
+    $respuestaValores = $_POST['respuesta'];
 }
 if(isset($_POST['insert'])){
     $nextCuestionario = new Cuestionario();
     $nextId = $nextCuestionario -> getNextAutoI()[0];
-    $newCuestionario = new Cuestionario($nextId, "", $participante);
+    $newCuestionario = new Cuestionario($nextId, $participante);
     $newCuestionario -> insert();
-    if($preguntasPost != null && count($preguntasPost)>0 && $respuestasPost != null && count($respuestasPost)>0){
-        if(count($preguntasPost) == count($respuestasPost)){
-            for($i = 0; $i < count($respuestasPost); $i++){
-                $esquema = new Esquema("", $preguntasPost[$i], $respuestasPost[$i], $nextId);
+    if($tipos != null && count($tipos)>0 && $respuestaValores != null && count($respuestaValores)>0){
+        if(count($tipos) == count($respuestaValores)){
+            for($i = 0; $i < count($respuestaValores); $i++){
+                $esquema = new Esquema("", $tipos[$i], $respuestaValores[$i], $nextId);
                 $esquema -> insert();
             }
         }
@@ -129,17 +129,16 @@ if($_SESSION['entity'] != null && $_SESSION['entity'] != 'Participante'){
 						<?php 
 						  $objPregunta = new Pregunta();
 						  $randomPreguntas = $objPregunta -> getRandomQuestions();
-						  $counter = 0;
+						  $counterPregunta = 0;
 						  foreach ($randomPreguntas as $pregunta){
-						      $counter++;
+						      $counterPregunta++;
 						  ?>
 						      <!-- Here goes the questions-->
 				            <div class="form-group form-check">
 								<div class="card">
         							<div class="card-header">
-        								Pregunta Numero <?php echo $counter . ": " . $pregunta -> getPregunta(); ?>
-        								<!-- Hidden question id[] -->
-        								  <input type="hidden" id="pregunta-<?php echo $counter-1;?>" name="pregunta[<?php echo $counter-1;?>]" value="<?php echo $pregunta -> getIdPregunta();?>"> 
+        								Pregunta Numero <?php echo $counterPregunta . ": " . $pregunta -> getPregunta(); ?>
+        								  <input type="hidden" id="pregunta-<?php echo $counterPregunta-1;?>" name="pregunta[<?php echo $counterPregunta-1;?>]" value="<?php echo $pregunta -> getIdPregunta();?>"> 
         							</div>
         							<div class="card-body">
         								<div class="card">
@@ -148,36 +147,24 @@ if($_SESSION['entity'] != null && $_SESSION['entity'] != 'Participante'){
         									</div>
         									<div class="card-body">
         										<fieldset class="form-group">
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-1" value="1" required>
-            											<label class="form-check-label" for="respuesta-1-<?php echo $counter-1;?>">
-            												Muy Bajo
-            											</label>
-            										</div>
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-2" value="2">
-            											<label class="form-check-label" for="respuesta-2-<?php echo $counter-1;?>">
-            												Bajo
-            											</label>
-            										</div>
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-3" value="3">
-            											<label class="form-check-label" for="respuesta-3-<?php echo $counter-1;?>">
-            												Medio
-            											</label>
-            										</div>
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-4" value="4">
-            											<label class="form-check-label" for="respuesta-4-<?php echo $counter-1;?>">
-            												Alto
-            											</label>
-            										</div>
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-5" value="5">
-            											<label class="form-check-label" for="respuesta-5-<?php echo $counter-1;?>">
-            												Muy Alto
-            											</label>
-            										</div>
+        											<?php 
+        											$objValor = new Valor("", "", $pregunta->getIdPregunta(), "", "");
+        											$valoresByPreg = $objValor -> selectAllByPregunta();
+        											$counterRespuesta = 0;
+        											foreach ($valoresByPreg as $valor){
+        											    $counterRespuesta ++;
+        											    ?>
+        											    <div class="form-check">
+                											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1 . "-" . $counterRespuesta;?>" value="<?php echo $counterRespuesta?>" required>
+                											<label class="form-check-label" for="respuesta-1-<?php echo $counterPregunta-1;?>">
+                												<?php 
+                												echo $valor -> getRespuesta() -> getTipo();
+                												?>
+                											</label>
+                										</div>
+        											    <?php 
+        											}
+        											?>
         										</fieldset>
         									</div>
         								</div>
@@ -186,9 +173,8 @@ if($_SESSION['entity'] != null && $_SESSION['entity'] != 'Participante'){
     						</div>       
 						  <?php 
 						  }
-						  echo "<input type='hidden' id='NroPreg' name='NroPreg' value=" . $counter . ">";
+						  echo "<input type='hidden' id='NroPreg' name='NroPreg' value=" . $counterPregunta . ">";
 						  ?>
-						<!-- onclick="return validateSubmit()" -->
 						<button type="submit" class="btn" name="insert" >Ingresar</button>
 					</form>
 				</div>

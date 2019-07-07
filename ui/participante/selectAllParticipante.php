@@ -124,9 +124,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					} else {
 						$participantes = $participante -> selectAll();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($participantes as $currentParticipante) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentParticipante -> getNombre() . "</td>";
 						echo "<td>" . $currentParticipante -> getApellido() . "</td>";
 						echo "<td>" . $currentParticipante -> getEmail() . "</td>";
@@ -145,7 +145,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					}
 					?>
 				</tbody>

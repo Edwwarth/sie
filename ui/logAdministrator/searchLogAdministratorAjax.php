@@ -21,9 +21,9 @@
 		<?php
 		$logAdministrator = new LogAdministrator();
 		$logAdministrators = $logAdministrator -> search($_GET['search']);
-		$counter = 1;
+		$counterPregunta = 1;
 		foreach ($logAdministrators as $currentLogAdministrator) {
-			echo "<tr><td>" . $counter . "</td>";
+			echo "<tr><td>" . $counterPregunta . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentLogAdministrator -> getAccion()) . "</td>";
 			echo "<td nowrap>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentLogAdministrator -> getFecha()) . "</td>";
 			echo "<td nowrap>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentLogAdministrator -> getHora()) . "</td>";
@@ -37,7 +37,7 @@
 				</a>
 				</td>";
 			echo "</tr>";
-			$counter++;
+			$counterPregunta++;
 		}
 		?>
 	</tbody>

@@ -105,9 +105,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					} else {
 						$respuestas = $respuesta -> selectAllByPregunta();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($respuestas as $currentRespuesta) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentRespuesta -> getRespuesta() . "</td>";
 						echo "<td>" . $currentRespuesta -> getAcierto() . "</td>";
 						echo "<td>" . $currentRespuesta -> getPregunta() -> getPregunta() . "</td>";
@@ -120,7 +120,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					};
 					?>
 				</tbody>

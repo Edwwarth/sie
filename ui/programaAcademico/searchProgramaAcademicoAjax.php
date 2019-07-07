@@ -15,9 +15,9 @@
 		<?php
 		$programaAcademico = new ProgramaAcademico();
 		$programaAcademicos = $programaAcademico -> search($_GET['search']);
-		$counter = 1;
+		$counterPregunta = 1;
 		foreach ($programaAcademicos as $currentProgramaAcademico) {
-			echo "<tr><td>" . $counter . "</td>";
+			echo "<tr><td>" . $counterPregunta . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentProgramaAcademico -> getNombre()) . "</td>";
 						echo "<td class='text-right' nowrap>";
 						if($_GET['entity'] == 'Administrator' || $_GET['entity'] == 'Evaluador') {
@@ -32,7 +32,7 @@
 						}
 						echo "</td>";
 			echo "</tr>";
-			$counter++;
+			$counterPregunta++;
 		}
 		?>
 	</tbody>

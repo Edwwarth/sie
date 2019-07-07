@@ -123,9 +123,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					} else {
 						$evaluadors = $evaluador -> selectAll();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($evaluadors as $currentEvaluador) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentEvaluador -> getNombre() . "</td>";
 						echo "<td>" . $currentEvaluador -> getApellido() . "</td>";
 						echo "<td>" . $currentEvaluador -> getEmail() . "</td>";
@@ -140,7 +140,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					}
 					?>
 				</tbody>

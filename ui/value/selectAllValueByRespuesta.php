@@ -79,9 +79,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					} else {
 						$values = $value -> selectAllByRespuesta();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($values as $currentValue) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentValue -> getProgramaAcademico() -> getNombre() . "</td>";
 						echo "<td>" . $currentValue -> getRespuesta() -> getTipo() . " " . $currentValue -> getRespuesta() -> getValor() . "</td>";
 						echo "<td class='text-right' nowrap>";
@@ -93,7 +93,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					};
 					?>
 				</tbody>

@@ -8,6 +8,7 @@ require("business/Participante.php");
 require("business/ProgramaAcademico.php");
 require("business/Esquema.php");
 require("business/Value.php");
+require("business/Valor.php");
 require("business/Respuesta.php");
 require("business/Pregunta.php");
 require("business/Cuestionario.php");

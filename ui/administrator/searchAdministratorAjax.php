@@ -19,9 +19,9 @@
 		<?php
 		$administrator = new Administrator();
 		$administrators = $administrator -> search($_GET['search']);
-		$counter = 1;
+		$counterPregunta = 1;
 		foreach ($administrators as $currentAdministrator) {
-			echo "<tr><td>" . $counter . "</td>";
+			echo "<tr><td>" . $counterPregunta . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentAdministrator -> getName()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentAdministrator -> getLastName()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentAdministrator -> getEmail()) . "</td>";
@@ -35,7 +35,7 @@
 						}
 						echo "</td>";
 			echo "</tr>";
-			$counter++;
+			$counterPregunta++;
 		}
 		?>
 	</tbody>

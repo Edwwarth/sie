@@ -50,21 +50,21 @@ $updateCuestionario -> select();
 						<?php
 						$esquema = new Esquema("", "", "", $_GET['idCuestionario']);
 						$esquemas = $esquema -> selectAllByCuestionario();
-						$counter = 0;
+						$counterPregunta = 0;
 						if(count($esquemas) == 0){
 						    print("<p>El numero de preguntas es cero</>");
 						}
 						foreach ($esquemas as $currentEsquema){
 						    $pregunta = new Pregunta($currentEsquema->getPregunta()->getIdPregunta());
-					        $pregunta -> select(); $counter++;?>
+					        $pregunta -> select(); $counterPregunta++;?>
     						<!-- Here goes the questions-->
     			            <div class="form-group form-check">
     							<div class="card">
         							<div class="card-header">
-        								Pregunta Numero <?php echo $counter . ": " . $currentEsquema-> getPregunta() -> getPregunta(); ?>
+        								Pregunta Numero <?php echo $counterPregunta . ": " . $currentEsquema-> getPregunta() -> getPregunta(); ?>
         								<!-- Hidden question id[] and Hidden questPreg id[] -->
-    								    <input type="hidden" id="pregunta-<?php echo $counter-1;?>" name="pregunta[<?php echo $counter-1;?>]" value="<?php echo $currentEsquema-> getPregunta() -> getIdPregunta();?>">
-    								    <input type="hidden" id="pregunta-<?php echo $counter-1;?>" name="idCuestionarioPreg[<?php echo $counter-1;?>]" value="<?php echo $currentEsquema -> getIdEsquema();?>"> 
+    								    <input type="hidden" id="pregunta-<?php echo $counterPregunta-1;?>" name="pregunta[<?php echo $counterPregunta-1;?>]" value="<?php echo $currentEsquema-> getPregunta() -> getIdPregunta();?>">
+    								    <input type="hidden" id="pregunta-<?php echo $counterPregunta-1;?>" name="idCuestionarioPreg[<?php echo $counterPregunta-1;?>]" value="<?php echo $currentEsquema -> getIdEsquema();?>"> 
         							</div>
         							<div class="card-body">
             							<?php
@@ -97,32 +97,32 @@ $updateCuestionario -> select();
         									<div class="card-body">
         										<fieldset class="form-group">
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-1" value="1" required <?php echo $uno != null ? $uno : ""; ?>>
-            											<label class="form-check-label" for="respuesta-1-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-1" value="1" required <?php echo $uno != null ? $uno : ""; ?>>
+            											<label class="form-check-label" for="respuesta-1-<?php echo $counterPregunta-1;?>">
             												Muy Bajo
             											</label>
             										</div>
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-2" value="2" <?php echo $dos != null ? $dos : ""; ?>>
-            											<label class="form-check-label" for="respuesta-2-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-2" value="2" <?php echo $dos != null ? $dos : ""; ?>>
+            											<label class="form-check-label" for="respuesta-2-<?php echo $counterPregunta-1;?>">
             												Bajo
             											</label>
             										</div>
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-3" value="3" <?php echo $tres != null ? $tres : ""; ?>>
-            											<label class="form-check-label" for="respuesta-3-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-3" value="3" <?php echo $tres != null ? $tres : ""; ?>>
+            											<label class="form-check-label" for="respuesta-3-<?php echo $counterPregunta-1;?>">
             												Medio
             											</label>
             										</div>
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-4" value="4" <?php echo $cuatro != null ? $cuatro : ""; ?>>
-            											<label class="form-check-label" for="respuesta-4-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-4" value="4" <?php echo $cuatro != null ? $cuatro : ""; ?>>
+            											<label class="form-check-label" for="respuesta-4-<?php echo $counterPregunta-1;?>">
             												Alto
             											</label>
             										</div>
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-5" value="5" <?php echo $cinco != null ? $cinco : ""; ?>>
-            											<label class="form-check-label" for="respuesta-5-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-5" value="5" <?php echo $cinco != null ? $cinco : ""; ?>>
+            											<label class="form-check-label" for="respuesta-5-<?php echo $counterPregunta-1;?>">
             												Muy Alto
             											</label>
             										</div>
@@ -133,7 +133,7 @@ $updateCuestionario -> select();
         						</div>     
     						</div>
 						<?php }
-						echo "<input type='hidden' id='NroPreg' name='NroPreg' value=" . $counter . ">";
+						echo "<input type='hidden' id='NroPreg' name='NroPreg' value=" . $counterPregunta . ">";
 						?>
 					</form>
 				</div>

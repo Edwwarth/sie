@@ -21,9 +21,9 @@
 		<?php
 		$logEvaluador = new LogEvaluador();
 		$logEvaluadors = $logEvaluador -> search($_GET['search']);
-		$counter = 1;
+		$counterPregunta = 1;
 		foreach ($logEvaluadors as $currentLogEvaluador) {
-			echo "<tr><td>" . $counter . "</td>";
+			echo "<tr><td>" . $counterPregunta . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentLogEvaluador -> getAccion()) . "</td>";
 			echo "<td nowrap>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentLogEvaluador -> getFecha()) . "</td>";
 			echo "<td nowrap>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentLogEvaluador -> getHora()) . "</td>";
@@ -37,7 +37,7 @@
 				</a>
 				</td>";
 			echo "</tr>";
-			$counter++;
+			$counterPregunta++;
 		}
 		?>
 	</tbody>

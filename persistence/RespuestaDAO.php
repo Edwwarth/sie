@@ -1,47 +1,50 @@
 <?php
 class RespuestaDAO{
-	private $idRespuesta;
-	private $tipo;
-	private $valor;
-
-	function RespuestaDAO($pIdRespuesta = "", $pTipo = "", $pValor = ""){
-		$this -> idRespuesta = $pIdRespuesta;
-		$this -> tipo = $pTipo;
-		$this -> valor = $pValor;
-	}
-
-	function insert(){
-		return "insert into Respuesta(tipo, valor)
-				values('" . $this -> tipo . "', '" . $this -> valor . "')";
-	}
-
-	function update(){
-		return "update Respuesta set 
-				tipo = '" . $this -> tipo . "',
-				valor = '" . $this -> valor . "'	
+    private $idRespuesta;
+    private $tipo;
+    
+    function RespuestaDAO($pIdRespuesta = "", $pTipo = ""){
+        $this -> idRespuesta = $pIdRespuesta;
+        $this -> tipo = $pTipo;
+    }
+    
+    function insert(){
+        return "insert into Respuesta(tipo)
+				values('" . $this -> tipo . "')";
+    }
+    
+    function update(){
+        return "update Respuesta set
+				tipo = '" . $this -> tipo . "'
 				where idRespuesta = '" . $this -> idRespuesta . "'";
-	}
-
-	function select() {
-		return "select idRespuesta, tipo, valor
+    }
+    
+    function select() {
+        return "select idRespuesta, tipo
 				from Respuesta
 				where idRespuesta = '" . $this -> idRespuesta . "'";
-	}
-
-	function selectAll() {
-		return "select idRespuesta, tipo, valor
+    }
+    
+    function selectAll() {
+        return "select idRespuesta, tipo
 				from Respuesta";
-	}
-
-	function selectAllOrder($orden, $dir){
-		return "select idRespuesta, tipo, valor
+    }
+    
+    function selectAllOrder($orden, $dir){
+        return "select idRespuesta, tipo
 				from Respuesta
 				order by " . $orden . " " . $dir;
-	}
-
-	function delete(){
-		return "delete from Respuesta
+    }
+    
+    function search($search) {
+        return "select idRespuesta, tipo
+				from Respuesta
+				where tipo like '%" . $search . "%'";
+    }
+    
+    function delete(){
+        return "delete from Respuesta
 				where idRespuesta = '" . $this -> idRespuesta . "'";
-	}
+    }
 }
 ?>

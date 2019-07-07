@@ -55,13 +55,13 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 		<div class="card-body">
 		<?php if(isset($_GET['action']) && $_GET['action']=="delete"){ ?>
 			<?php if($error == 0){ ?>
-				<div class="alert alert-success" >El registro fue eliminado correctamente.
+				<div class="alert alert-success" >El registro fuue eliminado exitosamente.
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<?php } else { ?>
-				<div class="alert alert-danger" >El registro no eliminado. Verifique información cruzada
+				<div class="alert alert-danger" >El registro no se eliminó. Verifique información cruzada
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -77,30 +77,15 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 							<span class='oi oi-caret-top'></span>
 						<?php } else { ?>
 							<a href='index.php?pid=<?php echo base64_encode("ui/pregunta/selectAllPregunta.php") ?>&order=pregunta&dir=asc'>
-							<span class='oi oi-sort-ascending' data-toggle='tooltip' class='tooltipLink' data-original-title='Ordenar Ascendente' ></span></a>
+							<span class='oi oi-sort-ascending' data-toggle='tooltip' class='tooltipLink' data-original-title='Ascendente' ></span></a>
 						<?php } ?>
 						<?php if(isset($_GET['order']) && isset($_GET['dir']) && $_GET['order']=="pregunta" && $_GET['dir']=="desc") { ?>
 							<span class='oi oi-caret-bottom'></span>
 						<?php } else { ?>
 							<a href='index.php?pid=<?php echo base64_encode("ui/pregunta/selectAllPregunta.php") ?>&order=pregunta&dir=desc'>
-							<span class='oi oi-sort-descending' data-toggle='tooltip' class='tooltipLink' data-original-title='Ordenar Descendente' ></span></a>
+							<span class='oi oi-sort-descending' data-toggle='tooltip' class='tooltipLink' data-original-title='Descendente' ></span></a>
 						<?php } ?>
 						</th>
-						<th nowrap>Respuesta Correcta 
-						<?php if(isset($_GET['order']) && isset($_GET['dir']) && $_GET['order']=="rCorrecta" && $_GET['dir']=="asc") { ?>
-							<span class='oi oi-caret-top'></span>
-						<?php } else { ?>
-							<a href='index.php?pid=<?php echo base64_encode("ui/pregunta/selectAllPregunta.php") ?>&order=rCorrecta&dir=asc'>
-							<span class='oi oi-sort-ascending' data-toggle='tooltip' class='tooltipLink' data-original-title='Ordenar Ascendente' ></span></a>
-						<?php } ?>
-						<?php if(isset($_GET['order']) && isset($_GET['dir']) && $_GET['order']=="rCorrecta" && $_GET['dir']=="desc") { ?>
-							<span class='oi oi-caret-bottom'></span>
-						<?php } else { ?>
-							<a href='index.php?pid=<?php echo base64_encode("ui/pregunta/selectAllPregunta.php") ?>&order=rCorrecta&dir=desc'>
-							<span class='oi oi-sort-descending' data-toggle='tooltip' class='tooltipLink' data-original-title='Ordenar Descendente' ></span></a>
-						<?php } ?>
-						</th>
-						<th>Programa Academico</th>
 						<th nowrap></th>
 					</tr>
 				</thead>
@@ -116,17 +101,12 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					foreach ($preguntas as $currentPregunta) {
 						echo "<tr><td>" . $counter . "</td>";
 						echo "<td>" . $currentPregunta -> getPregunta() . "</td>";
-						/**
-						 * Todas, Algunas, Ninguna?
-						 * */
-						echo "<td>" . $currentPregunta -> getRCorrecta() . "</td>";
-						echo "<td>" . $currentPregunta -> getProgramaAcademico() -> getNombre() . "</td>";
 						echo "<td class='text-right' nowrap>";
-						if($_SESSION['entity'] == 'Administrator' || $_SESSION['entity'] == 'Evaluador') {
+						if($_SESSION['entity'] == 'Administrator') {
 							echo "<a href='index.php?pid=" . base64_encode("ui/pregunta/updatePregunta.php") . "&idPregunta=" . $currentPregunta -> getIdPregunta() . "'><span class='oi oi-pencil' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Editar Pregunta' ></span></a> ";
 						}
-						if($_SESSION['entity'] == 'Administrator' || $_SESSION['entity'] == 'Evaluador') {
-							echo "<a href='index.php?pid=" . base64_encode("ui/pregunta/selectAllPregunta.php") . "&idPregunta=" . $currentPregunta -> getIdPregunta() . "&action=delete' onclick='return confirm(\"Confirma eliminar la Pregunta: " . $currentPregunta -> getPregunta() . " " . $currentPregunta -> getRCorrecta() . "\")'><span class='oi oi-delete' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Eliminar Pregunta' ></span></a> ";
+						if($_SESSION['entity'] == 'Administrator') {
+							echo "<a href='index.php?pid=" . base64_encode("ui/pregunta/selectAllPregunta.php") . "&idPregunta=" . $currentPregunta -> getIdPregunta() . "&action=delete' onclick='return confirm(\"Confirma eliminar la Pregunta: " . $currentPregunta -> getPregunta() . "\")'><span class='oi oi-delete' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Eliminar Pregunta' ></span></a> ";
 						}
 						echo "</td>";
 						echo "</tr>";

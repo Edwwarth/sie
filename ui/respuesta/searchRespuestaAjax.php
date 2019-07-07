@@ -17,9 +17,9 @@
 		<?php
 		$respuesta = new Respuesta();
 		$respuestas = $respuesta -> search($_GET['search']);
-		$counter = 1;
+		$counterPregunta = 1;
 		foreach ($respuestas as $currentRespuesta) {
-			echo "<tr><td>" . $counter . "</td>";
+			echo "<tr><td>" . $counterPregunta . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentRespuesta -> getRespuesta()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentRespuesta -> getAcierto()) . "</td>";
 			echo "<td>" . $currentRespuesta -> getPregunta() -> getPregunta() . "</td>";
@@ -32,7 +32,7 @@
 						}
 						echo "</td>";
 			echo "</tr>";
-			$counter++;
+			$counterPregunta++;
 		}
 		?>
 	</tbody>

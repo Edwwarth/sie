@@ -17,9 +17,9 @@
 		<?php
 		$evaluador = new Evaluador();
 		$evaluadors = $evaluador -> search($_GET['search']);
-		$counter = 1;
+		$counterPregunta = 1;
 		foreach ($evaluadors as $currentEvaluador) {
-			echo "<tr><td>" . $counter . "</td>";
+			echo "<tr><td>" . $counterPregunta . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentEvaluador -> getNombre()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentEvaluador -> getApellido()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentEvaluador -> getEmail()) . "</td>";
@@ -34,7 +34,7 @@
 						}
 						echo "</td>";
 			echo "</tr>";
-			$counter++;
+			$counterPregunta++;
 		}
 		?>
 	</tbody>

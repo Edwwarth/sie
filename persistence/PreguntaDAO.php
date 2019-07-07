@@ -53,5 +53,9 @@ class PreguntaDAO{
                 order by rand()
                 limit 20";
 	}
+	
+	function getNextAuto(){
+	    return "select AUTO_INCREMENT from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = 'sie26' and TABLE_NAME = 'Pregunta'";
+	}
 }
 ?>

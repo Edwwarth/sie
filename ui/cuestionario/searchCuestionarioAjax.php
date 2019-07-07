@@ -16,9 +16,9 @@
 		<?php
 		$cuestionario = new Cuestionario();
 		$cuestionarios = $cuestionario -> search($_GET['search']);
-		$counter = 1;
+		$counterPregunta = 1;
 		foreach ($cuestionarios as $currentCuestionario) {
-			echo "<tr><td>" . $counter . "</td>";
+			echo "<tr><td>" . $counterPregunta . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentCuestionario -> getRespuesta()) . "</td>";
 			echo "<td>" . $currentCuestionario -> getParticipante() -> getNombre() . " " . $currentCuestionario -> getParticipante() -> getApellido() . "</td>";
 						echo "<td class='text-right' nowrap>";
@@ -31,7 +31,7 @@
 						}
 						echo "</td>";
 			echo "</tr>";
-			$counter++;
+			$counterPregunta++;
 		}
 		?>
 	</tbody>

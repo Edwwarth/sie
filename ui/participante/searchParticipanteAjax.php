@@ -17,9 +17,9 @@
 		<?php
 		$participante = new Participante();
 		$participantes = $participante -> search($_GET['search']);
-		$counter = 1;
+		$counterPregunta = 1;
 		foreach ($participantes as $currentParticipante) {
-			echo "<tr><td>" . $counter . "</td>";
+			echo "<tr><td>" . $counterPregunta . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentParticipante -> getNombre()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentParticipante -> getApellido()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentParticipante -> getEmail()) . "</td>";
@@ -38,7 +38,7 @@
 						}
 						echo "</td>";
 			echo "</tr>";
-			$counter++;
+			$counterPregunta++;
 		}
 		?>
 	</tbody>

@@ -84,9 +84,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					} else {
 						$cuestionarios = $cuestionario -> selectAll();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($cuestionarios as $currentCuestionario) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentCuestionario -> getParticipante() -> getNombre() . " " . $currentCuestionario -> getParticipante() -> getApellido() . "</td>";
 						echo "<td class='text-right' nowrap>";
 						if($_SESSION['entity'] == 'Administrator' || $_SESSION['entity'] == 'Evaluador') {
@@ -98,7 +98,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					}
 					?>
 				</tbody>

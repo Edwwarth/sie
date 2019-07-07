@@ -12,14 +12,14 @@ if(isset($_POST['participante'])){
     $participante=$_POST['participante'];
 }
 
-$preguntasPost = array();
+$tipos = array();
 if(isset($_POST['pregunta'])){
-    $preguntasPost = $_POST['pregunta'];
+    $tipos = $_POST['pregunta'];
 }
 
-$respuestasPost = array();
+$respuestaValores = array();
 if(isset($_POST['respuesta'])){
-    $respuestasPost = $_POST['respuesta'];
+    $respuestaValores = $_POST['respuesta'];
 }
 
 $idCuestionarioPreg = array();
@@ -28,20 +28,20 @@ if(isset($_POST['idCuestionarioPreg'])){
 }
 
 if(isset($_POST['update'])){
-    if($preguntasPost != null && count($preguntasPost)>0 && $respuestasPost != null && count($respuestasPost)>0){
+    if($tipos != null && count($tipos)>0 && $respuestaValores != null && count($respuestaValores)>0){
         /**
          * Must be same length
          * */
-        if(count($preguntasPost) == count($respuestasPost)){
-            for($i = 0; $i < count($respuestasPost); $i++){
-                $pregunta = new Pregunta($preguntasPost[$i]);
+        if(count($tipos) == count($respuestaValores)){
+            for($i = 0; $i < count($respuestaValores); $i++){
+                $pregunta = new Pregunta($tipos[$i]);
                 $pregunta -> select();
                 /**
                  * After seach for the correct answer for each question
                  * Compare correct answer
                  * Can avoided with trigger
                  * */
-                $updateCuestionarioPregunta = new Esquema($idCuestionarioPreg[$i], $preguntasPost[$i], $respuestasPost[$i] , $idCuestionario);
+                $updateCuestionarioPregunta = new Esquema($idCuestionarioPreg[$i], $tipos[$i], $respuestaValores[$i] , $idCuestionario);
                 $updateCuestionarioPregunta -> update();
                 $updateCuestionarioPregunta -> select();
             }
@@ -130,21 +130,21 @@ if(isset($_POST['update'])){
 						<?php
 						$esquema = new Esquema("", "", "", $_GET['idCuestionario']);
 						$esquemas = $esquema -> selectAllByCuestionario();
-						$counter = 0;
+						$counterPregunta = 0;
 						if(count($esquemas) == 0){
 						    print("<p>El numero de preguntas es cero</>");
 						}
 						foreach ($esquemas as $currentEsquema){
 						    $pregunta = new Pregunta($currentEsquema->getPregunta()->getIdPregunta());
-					        $pregunta -> select(); $counter++;?>
+					        $pregunta -> select(); $counterPregunta++;?>
     						<!-- Here goes the questions-->
     			            <div class="form-group form-check">
     							<div class="card">
         							<div class="card-header">
-        								Pregunta Numero <?php echo $counter . ": " . $currentEsquema-> getPregunta() -> getPregunta(); ?>
+        								Pregunta Numero <?php echo $counterPregunta . ": " . $currentEsquema-> getPregunta() -> getPregunta(); ?>
         								<!-- Hidden question id[] and Hidden questPreg id[] -->
-    								    <input type="hidden" id="pregunta-<?php echo $counter-1;?>" name="pregunta[<?php echo $counter-1;?>]" value="<?php echo $currentEsquema-> getPregunta() -> getIdPregunta();?>">
-    								    <input type="hidden" id="pregunta-<?php echo $counter-1;?>" name="idCuestionarioPreg[<?php echo $counter-1;?>]" value="<?php echo $currentEsquema -> getIdEsquema();?>"> 
+    								    <input type="hidden" id="pregunta-<?php echo $counterPregunta-1;?>" name="pregunta[<?php echo $counterPregunta-1;?>]" value="<?php echo $currentEsquema-> getPregunta() -> getIdPregunta();?>">
+    								    <input type="hidden" id="pregunta-<?php echo $counterPregunta-1;?>" name="idCuestionarioPreg[<?php echo $counterPregunta-1;?>]" value="<?php echo $currentEsquema -> getIdEsquema();?>"> 
         							</div>
         							<div class="card-body">
             							<?php
@@ -177,32 +177,32 @@ if(isset($_POST['update'])){
         									<div class="card-body">
         										<fieldset class="form-group">
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-1" value="1" required <?php echo $uno != null ? $uno : ""; ?>>
-            											<label class="form-check-label" for="respuesta-1-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-1" value="1" required <?php echo $uno != null ? $uno : ""; ?>>
+            											<label class="form-check-label" for="respuesta-1-<?php echo $counterPregunta-1;?>">
             												Muy Bajo
             											</label>
             										</div>
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-2" value="2" <?php echo $dos != null ? $dos : ""; ?>>
-            											<label class="form-check-label" for="respuesta-2-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-2" value="2" <?php echo $dos != null ? $dos : ""; ?>>
+            											<label class="form-check-label" for="respuesta-2-<?php echo $counterPregunta-1;?>">
             												Bajo
             											</label>
             										</div>
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-3" value="3" <?php echo $tres != null ? $tres : ""; ?>>
-            											<label class="form-check-label" for="respuesta-3-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-3" value="3" <?php echo $tres != null ? $tres : ""; ?>>
+            											<label class="form-check-label" for="respuesta-3-<?php echo $counterPregunta-1;?>">
             												Medio
             											</label>
             										</div>
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-4" value="4" <?php echo $cuatro != null ? $cuatro : ""; ?>>
-            											<label class="form-check-label" for="respuesta-4-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-4" value="4" <?php echo $cuatro != null ? $cuatro : ""; ?>>
+            											<label class="form-check-label" for="respuesta-4-<?php echo $counterPregunta-1;?>">
             												Alto
             											</label>
             										</div>
             										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counter-1;?>]" id="respuesta-<?php echo $counter-1;?>-5" value="5" <?php echo $cinco != null ? $cinco : ""; ?>>
-            											<label class="form-check-label" for="respuesta-5-<?php echo $counter-1;?>">
+            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-5" value="5" <?php echo $cinco != null ? $cinco : ""; ?>>
+            											<label class="form-check-label" for="respuesta-5-<?php echo $counterPregunta-1;?>">
             												Muy Alto
             											</label>
             										</div>
@@ -213,7 +213,7 @@ if(isset($_POST['update'])){
         						</div>     
     						</div>
 						<?php }
-						echo "<input type='hidden' id='NroPreg' name='NroPreg' value=" . $counter . ">";
+						echo "<input type='hidden' id='NroPreg' name='NroPreg' value=" . $counterPregunta . ">";
 						?>
 						<button type="submit" class="btn" name="update">Editar</button>
 					</form>

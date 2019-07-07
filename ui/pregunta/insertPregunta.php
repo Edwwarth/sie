@@ -4,9 +4,29 @@ $pregunta="";
 if(isset($_POST['pregunta'])){
     $pregunta=$_POST['pregunta'];
 }
+$tipos = array();
+if(isset($_POST['Tipo'])){
+    $tipos = $_POST['Tipo'];
+}
+$valores = [0,0,0,0,0,0];
+if(isset($_POST['Value'])){
+    $valores = $_POST['Value'];
+}
+$programasAcademicos = [5,5,5,5,5,5];
+if(isset($_POST['programaAcademico'])){
+    $programasAcademicos = $_POST['programaAcademico'];
+}
 if(isset($_POST['insert'])){
-    $newPregunta = new Pregunta("", $pregunta);
+    $nextPregunta = new Pregunta();
+    $nextId = $nextPregunta -> getNextAutoI()[0];
+    $newPregunta = new Pregunta($nextId, $pregunta);
     $newPregunta -> insert();
+    if (count($tipos) == count($valores)){
+        for($i = 1; $i<=count($tipos); $i++){
+            $objValor = new Valor("", $valores[$i], $nextId, $programasAcademicos[$i], $tipos[$i]);
+            $objValor -> insert();
+        }
+    }    
     $user_ip = getenv('REMOTE_ADDR');
     $agent = $_SERVER["HTTP_USER_AGENT"];
     $browser = "-";
@@ -56,7 +76,7 @@ if(isset($_POST['insert'])){
 					<h4 class="card-title">Ingresar Pregunta</h4>
 				</div>
 				<div class="card-body">
-					<?php if($processed){ ?>
+					<?php if($processed){?>
 					<div class="alert alert-success" >Datos Ingresados
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -68,6 +88,41 @@ if(isset($_POST['insert'])){
 							<label>Pregunta*</label>
 							<input type="text" class="form-control" name="pregunta" value="<?php echo $pregunta ?>" required />
 						</div>
+						<?php 
+						$objRespuesta = new Respuesta();
+						$respuestas = $objRespuesta -> selectAll();
+						$counter = 0;
+						foreach ($respuestas as $respuesta){
+						    $counter ++;
+						    ?>
+						  	<div class="form-row">
+                                <div class="col">
+                                  <input type="text" class="form-control" value="<?php echo $respuesta->getTipo()?>" readonly>
+                                  <input type="hidden" class="form-control" name="Tipo[<?php echo $respuesta -> getIdRespuesta()?>]" value="<?php echo $respuesta->getIdRespuesta()?>" readonly>
+                                </div>
+                                <div class="col">
+            						<select class="form-control" name="programaAcademico[<?php echo $counter?>]">
+            							<?php
+            							$objProgramaAcademico = new ProgramaAcademico();
+            							$programaAcademicos = $objProgramaAcademico -> selectAll();            							
+            							foreach($programaAcademicos as $currentProgramaAcademico){
+            							    echo "<option value='" . $currentProgramaAcademico -> getIdProgramaAcademico() . "'";
+            							    if($currentProgramaAcademico -> getIdProgramaAcademico() == $programasAcademicos[$counter]){
+            							        echo " selected";
+            							    }
+            								echo ">" . $currentProgramaAcademico -> getNombre() . "</option>";
+            							}
+            							?>
+            						</select>
+            					</div>
+            					<div class="col">
+                                  <input type="number" class="form-control" name="Value[<?php echo $counter?>]" placeholder="Valor" value=<?php echo $valores[$counter]?>>
+                                </div>
+                             </div> 
+                             <br> 
+						    <?php 
+						}
+						?>
 						<button type="submit" class="btn" name="insert">Ingresar</button>
 					</form>
 				</div>

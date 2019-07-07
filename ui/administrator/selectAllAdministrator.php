@@ -98,9 +98,9 @@
 					} else {
 						$administrators = $administrator -> selectAll();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($administrators as $currentAdministrator) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentAdministrator -> getName() . "</td>";
 						echo "<td>" . $currentAdministrator -> getLastName() . "</td>";
 						echo "<td>" . $currentAdministrator -> getEmail() . "</td>";
@@ -114,7 +114,7 @@
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					}
 					?>
 				</tbody>

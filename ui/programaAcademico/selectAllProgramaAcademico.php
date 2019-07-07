@@ -95,9 +95,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					} else {
 						$programaAcademicos = $programaAcademico -> selectAll();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($programaAcademicos as $currentProgramaAcademico) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentProgramaAcademico -> getNombre() . "</td>";
 						echo "<td class='text-right' nowrap>";
 						if($_SESSION['entity'] == 'Administrator' || $_SESSION['entity'] == 'Evaluador') {
@@ -112,7 +112,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					}
 					?>
 				</tbody>

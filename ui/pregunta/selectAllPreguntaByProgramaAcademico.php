@@ -100,9 +100,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 					} else {
 						$preguntas = $pregunta -> selectAllByProgramaAcademico();
 					}
-					$counter = 1;
+					$counterPregunta = 1;
 					foreach ($preguntas as $currentPregunta) {
-						echo "<tr><td>" . $counter . "</td>";
+						echo "<tr><td>" . $counterPregunta . "</td>";
 						echo "<td>" . $currentPregunta -> getPregunta() . "</td>";
 						echo "<td>" . $currentPregunta -> getRCorrecta() . "</td>";
 						echo "<td>" . $currentPregunta -> getProgramaAcademico() -> getNombre() . "</td>";
@@ -119,7 +119,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						}
 						echo "</td>";
 						echo "</tr>";
-						$counter++;
+						$counterPregunta++;
 					};
 					?>
 				</tbody>
