@@ -153,9 +153,13 @@ if($_SESSION['entity'] != null && $_SESSION['entity'] != 'Participante'){
         											$counterRespuesta = 0;
         											foreach ($valoresByPreg as $valor){
         											    $counterRespuesta ++;
+        											    $checked = "";
+        											    if(!empty($respuestaValores[$counterPregunta-1]) && $valor -> getRespuesta() -> getIdRespuesta() == $respuestaValores[$counterPregunta -1]){
+        											        $checked = "checked";
+        											    }
         											    ?>
         											    <div class="form-check">
-                											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1 . "-" . $counterRespuesta;?>" value="<?php echo $counterRespuesta?>" required>
+                											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1 . "-" . $counterRespuesta;?>" value="<?php echo $counterRespuesta?>" required <?php echo $checked != null ? $checked : ""; ?>>
                 											<label class="form-check-label" for="respuesta-1-<?php echo $counterPregunta-1;?>">
                 												<?php 
                 												echo $valor -> getRespuesta() -> getTipo();

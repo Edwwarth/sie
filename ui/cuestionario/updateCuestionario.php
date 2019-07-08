@@ -34,8 +34,6 @@ if(isset($_POST['update'])){
          * */
         if(count($tipos) == count($respuestaValores)){
             for($i = 0; $i < count($respuestaValores); $i++){
-                $pregunta = new Pregunta($tipos[$i]);
-                $pregunta -> select();
                 /**
                  * After seach for the correct answer for each question
                  * Compare correct answer
@@ -135,8 +133,7 @@ if(isset($_POST['update'])){
 						    print("<p>El numero de preguntas es cero</>");
 						}
 						foreach ($esquemas as $currentEsquema){
-						    $pregunta = new Pregunta($currentEsquema->getPregunta()->getIdPregunta());
-					        $pregunta -> select(); $counterPregunta++;?>
+						    $counterPregunta++;?>
     						<!-- Here goes the questions-->
     			            <div class="form-group form-check">
     							<div class="card">
@@ -147,65 +144,34 @@ if(isset($_POST['update'])){
     								    <input type="hidden" id="pregunta-<?php echo $counterPregunta-1;?>" name="idCuestionarioPreg[<?php echo $counterPregunta-1;?>]" value="<?php echo $currentEsquema -> getIdEsquema();?>"> 
         							</div>
         							<div class="card-body">
-            							<?php
-            							$respuesta = $currentEsquema -> getRespuesta() -> getIdRespuesta();
-    									$uno = "";
-    									$dos = "";
-    									$tres = "";
-    									$cuatro = "";
-    									$cinco = "";
-    									if($respuesta != ""){
-    										switch($respuesta){
-    											case 1: $uno = "checked";
-    											break;
-    											case 2: $dos = "checked";
-    											break;
-    											case 3: $tres = "checked";
-    											break;
-    											case 4: $cuatro = "checked";
-    											break;
-    											case 5: $cinco = "checked";
-    											break;
-    										}
-    									}
-    									
-        								?>
-        								<div class="card">
+        							<div class="card">
         									<div class="card-header">
         										<label>Respuesta*</label>
         									</div>
         									<div class="card-body">
         										<fieldset class="form-group">
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-1" value="1" required <?php echo $uno != null ? $uno : ""; ?>>
-            											<label class="form-check-label" for="respuesta-1-<?php echo $counterPregunta-1;?>">
-            												Muy Bajo
-            											</label>
-            										</div>
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-2" value="2" <?php echo $dos != null ? $dos : ""; ?>>
-            											<label class="form-check-label" for="respuesta-2-<?php echo $counterPregunta-1;?>">
-            												Bajo
-            											</label>
-            										</div>
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-3" value="3" <?php echo $tres != null ? $tres : ""; ?>>
-            											<label class="form-check-label" for="respuesta-3-<?php echo $counterPregunta-1;?>">
-            												Medio
-            											</label>
-            										</div>
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-4" value="4" <?php echo $cuatro != null ? $cuatro : ""; ?>>
-            											<label class="form-check-label" for="respuesta-4-<?php echo $counterPregunta-1;?>">
-            												Alto
-            											</label>
-            										</div>
-            										<div class="form-check">
-            											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1;?>-5" value="5" <?php echo $cinco != null ? $cinco : ""; ?>>
-            											<label class="form-check-label" for="respuesta-5-<?php echo $counterPregunta-1;?>">
-            												Muy Alto
-            											</label>
-            										</div>
+                        							<?php
+                        							$objValor = new Valor("", "", $currentEsquema -> getPregunta() -> getIdPregunta(), "", "");
+                        							$valoresPorPregunta = $objValor -> selectAllByPregunta();
+                        							$counterRespuesta = 0;
+                        							foreach ($valoresPorPregunta as $valor){
+                        							    $counterRespuesta ++;
+                        							    $checked = "";
+                        							    if($valor -> getRespuesta() -> getIdRespuesta() == $currentEsquema -> getRespuesta() -> getIdRespuesta()){
+                        							        $checked = "checked";
+                        							    }
+                        							    ?>
+                        							    <div class="form-check">
+                											<input class="form-check-input" type="radio" name="respuesta[<?php echo $counterPregunta-1;?>]" id="respuesta-<?php echo $counterPregunta-1 . "-" . $counterRespuesta;?>" value="<?php echo $counterRespuesta ?>" required <?php echo $checked != null ? $checked : ""; ?>>
+                											<label class="form-check-label" for="respuesta-<?php echo $counterRespuesta . "-" . $counterPregunta-1;?>">
+                												<?php 
+                												echo $valor -> getRespuesta() -> getTipo();
+                												?>
+                											</label>
+                										</div>
+                        							    <?php 
+                        							}
+                    								?>        								
         										</fieldset>
         									</div>
         								</div>

@@ -22,7 +22,7 @@ if(isset($_GET['idCuestionario'])){
 	$cuestionario=$_GET['idCuestionario'];
 }
 if(isset($_POST['insert'])){
-	$newEsquema = new Esquema("", $pregunta, $respuesta, $cuestionario);
+	$newEsquema = new Esquema("", $pregunta, $cuestionario);
 	$newEsquema -> insert();
 	$objPregunta = new Pregunta($pregunta);
 	$objPregunta -> select();
