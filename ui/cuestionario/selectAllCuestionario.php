@@ -92,6 +92,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						if($_SESSION['entity'] == 'Administrator' || $_SESSION['entity'] == 'Evaluador') {
 						    echo "<a href='index.php?pid=" . base64_encode("ui/cuestionario/detailCuestionario.php") . "&idCuestionario=" . $currentCuestionario -> getIdCuestionario() . "'><span class='oi oi-eye' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Ver Cuestionario' ></span></a> ";
 							echo "<a href='index.php?pid=" . base64_encode("ui/cuestionario/updateCuestionario.php") . "&idCuestionario=" . $currentCuestionario -> getIdCuestionario() . "'><span class='oi oi-pencil' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Editar Cuestionario' ></span></a> ";
+							echo "<a href='index.php?pid=" . base64_encode("ui/participante/reporteIndividual.php") . "&idCuestionario=" . $currentCuestionario -> getIdCuestionario() . "'><span class='oi oi-eye' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Mostrar Reporte' ></span></a> ";
 						}
 						if($_SESSION['entity'] == 'Administrator') {
 							echo "<a href='index.php?pid=" . base64_encode("ui/cuestionario/selectAllCuestionario.php") . "&idCuestionario=" . $currentCuestionario -> getIdCuestionario() . "&action=delete' onclick='return confirm(\"Confirma eliminar el Cuestionario?\")'><span class='oi oi-delete' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Eliminar Cuestionario' ></span></a> ";

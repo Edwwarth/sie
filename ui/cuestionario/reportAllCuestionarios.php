@@ -23,6 +23,7 @@ var path = "indexAjax.php?pid=<?php echo base64_encode("ui/cuestionario/reportes
 $("#list").load(path);
 
 var numberList = [0,0,0,0,0,0];
+
 $( document ).ajaxSuccess(function( event, request, settings ) {
 	$.each(request.responseText.split(";"), function(key, value){
 	    $.each(value.split(","), function(key, value){
@@ -32,17 +33,20 @@ $( document ).ajaxSuccess(function( event, request, settings ) {
 		});
 	});
 	var ctx = document.getElementById('myChart').getContext('2d');
+	var ProgramaAcademico = [];
+	<?php 
+	$objProgramaAcademico = new ProgramaAcademico();
+	$programas = $objProgramaAcademico -> selectAll();
+	foreach ($programas as $programa){
+	   ?>
+	   ProgramaAcademico.push("<?php echo $programa -> getNombre()?>");
+	   <?php 
+	}
+	?>
 	var chart = new Chart(ctx, {
 	    type: 'horizontalBar',
 	    data: {
-	        labels: [
-		        'Tecnología en gestión de la producción industrial', 
-	        	'Tecnología en electrónica', 
-	        	'Tecnología en construcciones civiles', 
-	        	'Tecnología en sistemas eléctricos de media y baja tensión',
-	        	'Tecnología en gestión de la producción industrial',  
-	        	'Tecnología en sistematización de datos',
-	        	],
+	        labels: ProgramaAcademico,
 	        datasets: [{
 	            label: 'Resultados Múltiples',
 	            backgroundColor: 'rgba(0,0,255,0.5)',

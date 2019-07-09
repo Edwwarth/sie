@@ -80,7 +80,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 				</thead>
 				</tbody>
 					<?php
-					$cuestionario = new Cuestionario("", "", $_GET['idParticipante']);
+					$cuestionario = new Cuestionario("", $_GET['idParticipante']);
 					if(isset($_GET['order']) && isset($_GET['dir'])) {
 						$cuestionarios = $cuestionario -> selectAllByParticipanteOrder($_GET['order'], $_GET['dir']);
 					} else {
