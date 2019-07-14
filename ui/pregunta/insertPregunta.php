@@ -8,7 +8,7 @@ $tipos = array();
 if(isset($_POST['Tipo'])){
     $tipos = $_POST['Tipo'];
 }
-$valores = [0,0,0,0,0,0];
+$valores = [1,1,2,3,4,5];
 if(isset($_POST['Value'])){
     $valores = $_POST['Value'];
 }
