@@ -81,9 +81,11 @@ if(isset($_POST['logIn'])){
                   <div class="col-6">
                     <button class="btn btn-primary px-4" type="submit" class="btn btn-primary" name="logIn">Ingresar</button>
                   </div>
+                  <!--
                   <div class="col-6 text-right">
                     <button class="btn btn-link px-0" type="button" onclick="location.href='index.php?pid=<?php echo base64_encode("ui/recoverPassword.php")?>'">¿Olvidaste tu clave?</button>
-                  </div>
+                  </div> 
+                   -->
                 </div>
             </form>
           </div>
@@ -93,7 +95,7 @@ if(isset($_POST['logIn'])){
             <div>
               <h2>Registrate</h2>
               <p></p>
-              <button class="btn btn-primary active mt-3" type="button">Registrate ahora</button>
+              <button class="btn btn-primary active mt-3" type="button" onclick="location.href='index.php?pid=<?php echo base64_encode("ui/participante/insertParticipante.php")?>'">Registrate ahora</button>
             </div>
           </div>
         </div>

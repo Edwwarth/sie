@@ -133,7 +133,10 @@ if(isset($_GET['logOut'])){
 		$pid=base64_decode($_GET['pid']);
 		if($webPages[0] == $pid){
 			include($pid);
-		}else{
+		}else if('ui/participante/insertParticipante.php' == $pid){
+		    include($pid);
+		}
+		else{
 			if($_SESSION['id']==""){
 				header("Location: index.php");
 				die();

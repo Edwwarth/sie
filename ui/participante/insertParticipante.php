@@ -35,6 +35,14 @@ if(isset($_POST['insert'])){
 	} else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $agent) ) {
 		$browser = "Safari";
 	}
+	$participante = new Participante();
+	if($_SESSION['id'] == "" && $participante -> logIn($email, $password)){
+	    $_SESSION['id']=$participante -> getIdParticipante();
+	    $_SESSION['entity']="Participante";
+	    $logParticipante = new LogParticipante("", "Log In", "", date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $participante -> getIdParticipante());
+	    $logParticipante -> insert();
+	    echo "<script>location.href = 'index.php?pid=" . base64_encode('ui/cuestionario/insertCuestionario.php') . "&par=true" . "'</script>";
+	}
 	if($_SESSION['entity'] == 'Administrator'){
 		$logAdministrator = new LogAdministrator("","Create Participante", "Nombre: " . $nombre . ";; Apellido: " . $apellido . ";; Email: " . $email . ";; Password: " . $password, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
 		$logAdministrator -> insert();
@@ -49,6 +57,10 @@ if(isset($_POST['insert'])){
 	}
 	$processed=true;
 }
+
+//registrer the user without entity
+
+if($_SESSION['id'] != ""){
 ?>
 <ol class="breadcrumb">
     <li class="breadcrumb-item">Inicio</li>
@@ -59,13 +71,21 @@ if(isset($_POST['insert'])){
 		</div>
 	</li>
 </ol>
-<div class="container">
+<?php }
+else{
+    echo "<script>document.getElementsByTagName('body')[0].className='app header-fixed sidebar-fixed aside-menu-fixed pace-done'</script>";
+}
+?>
+<div class="container" id="principalContainer">
+	<?php
+	$_SESSION['id'] != "" ? print("") : print("<script>document.getElementById('principalContainer').style.paddingBottom = '90px';</script>");
+	?>
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
 			<div class="card">
 				<div class="card-header">
-					<h4 class="card-title">Crear Participante</h4>
+					<h4 class="card-title"><?php $_SESSION['id'] != "" ? print("Crear Participante") : print("Registrar Nuevo Usuario")?></h4>
 				</div>
 				<div class="card-body">
 					<?php if($processed){ ?>
