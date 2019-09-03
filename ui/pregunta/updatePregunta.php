@@ -136,10 +136,29 @@ if(isset($_POST['update'])){
 						    <?php 
 						}
 						?>
-						<button type="submit" class="btn" name="update">Editar</button>
+						<button id="ingr" class="btn" name="update">Editar</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+
+$("#ingr").click(function() {
+	values = []
+	for (i=1; i<=5; i++){
+		selected_val = $('select[name="programaAcademico['+ i +']"] option:selected').val()
+		if(!values.includes(selected_val)){
+			values.push(selected_val)
+		} else{
+			confirm("Las carreras no pueden estar ser repetidas.")
+			return false;
+		}
+		
+	}
+	$("#ingr").submit();
+});
+
+</script>

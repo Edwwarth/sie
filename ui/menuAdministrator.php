@@ -246,7 +246,6 @@ if (isset($_GET['logOut'])) {
     </div>
     <div class="main">
         <?php
-
     	if (!empty($_GET['pid'])) {
             $pid = base64_decode($_GET['pid']);
     	    if (in_array($pid, $webPages)) {

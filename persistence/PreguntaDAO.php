@@ -57,5 +57,11 @@ class PreguntaDAO{
 	function getNextAuto(){
 	    return "select AUTO_INCREMENT from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = 'sie26' and TABLE_NAME = 'Pregunta'";
 	}
+
+	function existPregunta($nombre){
+		return "select idPregunta, pregunta
+				from Pregunta
+				where pregunta = '" . $nombre . "'";
+	}
 }
 ?>

@@ -15,8 +15,12 @@ $email="";
 if(isset($_POST['email'])){
 	$email=$_POST['email'];
 }
+$identification = "";
+if(isset($_POST['identification'])){
+	$identification=$_POST['identification'];
+}
 if(isset($_POST['update'])){
-	$updateParticipante = new Participante($idParticipante, $nombre, $apellido, $email, "", "");
+	$updateParticipante = new Participante($idParticipante, $nombre, $apellido, $email, "", $identification, "");
 	$updateParticipante -> update();
 	$updateParticipante -> select();
 	$user_ip = getenv('REMOTE_ADDR');
@@ -87,6 +91,10 @@ if(isset($_POST['update'])){
 						<div class="form-group">
 							<label>Correo</label>
 							<input type="email" class="form-control" name="email" value="<?php echo $updateParticipante -> getEmail() ?>"  required />
+						</div>
+						<div class="form-group">
+							<label>Identificación</label>
+							<input type="int" class="form-control" name="identification" value="<?php echo $updateParticipante -> getIdentification() ?>"  required />
 						</div>
 						<button type="submit" class="btn" name="update">Editar</button>
 					</form>

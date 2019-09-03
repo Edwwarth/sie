@@ -10,6 +10,7 @@
 			<th nowrap>Nombre</th>
 			<th nowrap>Apellido</th>
 			<th nowrap>Correo</th>
+			<th nowrap>identificación</th>
 			<th nowrap></th>
 		</tr>
 	</thead>
@@ -23,6 +24,7 @@
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentParticipante -> getNombre()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentParticipante -> getApellido()) . "</td>";
 			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentParticipante -> getEmail()) . "</td>";
+			echo "<td>" . str_ireplace($_GET['search'], "<mark>" . $_GET['search'] . "</mark>", $currentParticipante -> getIdentification()) . "</td>";
 						echo "<td class='text-right' nowrap>";
 						echo "<a href='modalParticipante.php?idParticipante=" . $currentParticipante -> getIdParticipante() . "'  data-toggle='modal' data-target='#modalParticipante' ><span class='oi oi-eye' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Ver Mas Información' ></span></a> ";
 						if($_GET['entity'] == 'Administrator' || $_GET['entity'] == 'Evaluador') {

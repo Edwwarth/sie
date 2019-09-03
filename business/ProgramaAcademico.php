@@ -92,5 +92,17 @@ class ProgramaAcademico {
 		$this -> connection -> close();
 		return $success;
 	}
+
+	function existProgramaAcademico($nombre){
+		$this -> connection -> open();
+		$this -> connection -> run($this -> programaAcademicoDAO -> existProgramaAcademico($nombre));
+		if($this -> connection -> numRows()==1){
+			$this -> connection -> close();
+			return true;
+		}else{
+			$this -> connection -> close();
+			return false;
+		}
+	}
 }
 ?>

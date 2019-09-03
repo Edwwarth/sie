@@ -46,5 +46,11 @@ class ProgramaAcademicoDAO{
 		return "delete from ProgramaAcademico
 				where idProgramaAcademico = '" . $this -> idProgramaAcademico . "'";
 	}
+
+	function existProgramaAcademico($nombre){
+		return "select idProgramaAcademico, nombre
+				from ProgramaAcademico
+				where nombre = '" . $nombre . "'";
+	}
 }
 ?>

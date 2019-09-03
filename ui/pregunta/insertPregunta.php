@@ -1,5 +1,6 @@
 <?php
 $processed=false;
+$processedPr = true;
 $pregunta="";
 if(isset($_POST['pregunta'])){
     $pregunta=$_POST['pregunta'];
@@ -17,45 +18,49 @@ if(isset($_POST['programaAcademico'])){
     $programasAcademicos = $_POST['programaAcademico'];
 }
 if(isset($_POST['insert'])){
-    $nextPregunta = new Pregunta();
-    $nextId = $nextPregunta -> getNextAutoI()[0];
-    $newPregunta = new Pregunta($nextId, $pregunta);
-    $newPregunta -> insert();
-    if (count($tipos) == count($valores)){
-        for($i = 1; $i<=count($tipos); $i++){
-            $objValor = new Valor("", $valores[$i], $nextId, $programasAcademicos[$i], $tipos[$i]);
-            $objValor -> insert();
-        }
-    }    
-    $user_ip = getenv('REMOTE_ADDR');
-    $agent = $_SERVER["HTTP_USER_AGENT"];
-    $browser = "-";
-    if( preg_match('/MSIE (\d+\.\d+);/', $agent) ) {
-        $browser = "Internet Explorer";
-    } else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $agent) ) {
-        $browser = "Chrome";
-    } else if (preg_match('/Edge\/\d+/', $agent) ) {
-        $browser = "Edge";
-    } else if ( preg_match('/Firefox[\/\s](\d+\.\d+)/', $agent) ) {
-        $browser = "Firefox";
-    } else if ( preg_match('/OPR[\/\s](\d+\.\d+)/', $agent) ) {
-        $browser = "Opera";
-    } else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $agent) ) {
-        $browser = "Safari";
-    }
-    if($_SESSION['entity'] == 'Administrator'){
-        $logAdministrator = new LogAdministrator("","Create Pregunta", "Pregunta: " . $pregunta, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
-        $logAdministrator -> insert();
-    }
-    else if($_SESSION['entity'] == 'Evaluador'){
-        $logEvaluador = new LogEvaluador("","Create Pregunta", "Pregunta: " . $pregunta, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
-        $logEvaluador -> insert();
-    }
-    else if($_SESSION['entity'] == 'Participante'){
-        $logParticipante = new LogParticipante("","Create Pregunta", "Pregunta: " . $pregunta, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
-        $logParticipante -> insert();
-    }
-    $processed=true;
+	$nextPregunta = new Pregunta();
+	if(!$nextPregunta->existPregunta($pregunta)){
+		$nextId = $nextPregunta -> getNextAutoI()[0];
+		$newPregunta = new Pregunta($nextId, $pregunta);
+		$newPregunta -> insert();
+		if (count($tipos) == count($valores)){
+			for($i = 1; $i<=count($tipos); $i++){
+				$objValor = new Valor("", $valores[$i], $nextId, $programasAcademicos[$i], $tipos[$i]);
+				$objValor -> insert();
+			}
+		}    
+		$user_ip = getenv('REMOTE_ADDR');
+		$agent = $_SERVER["HTTP_USER_AGENT"];
+		$browser = "-";
+		if( preg_match('/MSIE (\d+\.\d+);/', $agent) ) {
+			$browser = "Internet Explorer";
+		} else if (preg_match('/Chrome[\/\s](\d+\.\d+)/', $agent) ) {
+			$browser = "Chrome";
+		} else if (preg_match('/Edge\/\d+/', $agent) ) {
+			$browser = "Edge";
+		} else if ( preg_match('/Firefox[\/\s](\d+\.\d+)/', $agent) ) {
+			$browser = "Firefox";
+		} else if ( preg_match('/OPR[\/\s](\d+\.\d+)/', $agent) ) {
+			$browser = "Opera";
+		} else if (preg_match('/Safari[\/\s](\d+\.\d+)/', $agent) ) {
+			$browser = "Safari";
+		}
+		if($_SESSION['entity'] == 'Administrator'){
+			$logAdministrator = new LogAdministrator("","Create Pregunta", "Pregunta: " . $pregunta, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
+			$logAdministrator -> insert();
+		}
+		else if($_SESSION['entity'] == 'Evaluador'){
+			$logEvaluador = new LogEvaluador("","Create Pregunta", "Pregunta: " . $pregunta, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
+			$logEvaluador -> insert();
+		}
+		else if($_SESSION['entity'] == 'Participante'){
+			$logParticipante = new LogParticipante("","Create Pregunta", "Pregunta: " . $pregunta, date("Y-m-d"), date("H:i:s"), $user_ip, PHP_OS, $browser, $_SESSION['id']);
+			$logParticipante -> insert();
+		}
+		$processed=true;
+	}else{
+		$processedPr = false;
+	}
 }
 ?>
 <ol class="breadcrumb">
@@ -78,6 +83,13 @@ if(isset($_POST['insert'])){
 				<div class="card-body">
 					<?php if($processed){?>
 					<div class="alert alert-success" >Datos Ingresados
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<?php } ?>
+					<?php if(!$processedPr){?>
+					<div class="alert alert-danger" >No se pueden repetir preguntas.
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -116,17 +128,40 @@ if(isset($_POST['insert'])){
             						</select>
             					</div>
             					<div class="col">
-                                  <input type="number" class="form-control" name="Value[<?php echo $counter?>]" placeholder="Valor" value=<?php echo $valores[$counter]?>>
+                                  <input type="number" class="form-control" name="Value[<?php echo $counter?>]" placeholder="Valor" value=<?php echo $valores[$counter]?> readonly>
                                 </div>
                              </div> 
                              <br> 
 						    <?php 
 						}
 						?>
-						<button type="submit" class="btn" name="insert">Ingresar</button>
+						<button id="ingr" class="btn" name="insert">Ingresar</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
+
+$(document).ready(function() {
+    for (i=1; i<=5; i++){ 
+		$('select[name="programaAcademico['+ i +']"] option')[i-1].selected = true 
+	}
+});
+$("#ingr").click(function() {
+	values = []
+	for (i=1; i<=5; i++){
+		selected_val = $('select[name="programaAcademico['+ i +']"] option:selected').val()
+		if(!values.includes(selected_val)){
+			values.push(selected_val)
+		} else{
+			confirm("Las carreras no pueden estar ser repetidas.")
+			return false;
+		}
+		
+	}
+	$("#ingr").submit();
+});
+
+</script>

@@ -113,7 +113,9 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 							<span class='oi oi-sort-descending' data-toggle='tooltip' class='tooltipLink' data-original-title='Ordenar Descendente' ></span></a>
 						<?php } ?>
 						</th>
+						<th nowrap>Identificación </th>
 						<th nowrap></th>
+						
 					</tr>
 				</thead>
 				</tbody>
@@ -130,6 +132,7 @@ if(!empty($_GET['action']) && $_GET['action']=="delete"){
 						echo "<td>" . $currentParticipante -> getNombre() . "</td>";
 						echo "<td>" . $currentParticipante -> getApellido() . "</td>";
 						echo "<td>" . $currentParticipante -> getEmail() . "</td>";
+						echo "<td>" . $currentParticipante -> getIdentification() . "</td>";
 						echo "<td class='text-right' nowrap>";
 						echo "<a href='modalParticipante.php?idParticipante=" . $currentParticipante -> getIdParticipante() . "'  data-toggle='modal' data-target='#modalParticipante' ><span class='oi oi-eye' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='Ver Mas Información' ></span></a> ";
 						if($_SESSION['entity'] == 'Administrator' || $_SESSION['entity'] == 'Evaluador') {

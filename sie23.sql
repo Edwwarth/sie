@@ -310,6 +310,7 @@ CREATE TABLE `Participante` (
   `apellido` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
+  `identification` int(11) NOT NULL,
   `imagen` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

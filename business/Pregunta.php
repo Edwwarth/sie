@@ -110,5 +110,17 @@ class Pregunta {
 	    $this -> connection -> close();
 	    return $result;
 	}
+
+	function existPregunta($nombre){
+		$this -> connection -> open();
+		$this -> connection -> run($this -> preguntaDAO -> existPregunta($nombre));
+		if($this -> connection -> numRows()==1){
+			$this -> connection -> close();
+			return true;
+		}else{
+			$this -> connection -> close();
+			return false;
+		}
+	}
 }
 ?>

@@ -11,6 +11,7 @@ class Participante {
 	private $imagen;
 	private $participanteDAO;
 	private $connection;
+	private $identification;
 
 	function getIdParticipante() {
 		return $this -> idParticipante;
@@ -60,14 +61,23 @@ class Participante {
 		$this -> imagen = $pImagen;
 	}
 
-	function Participante($pIdParticipante = "", $pNombre = "", $pApellido = "", $pEmail = "", $pPassword = "", $pImagen = ""){
+	function getIdentification() {
+		return $this -> identification;
+	}
+
+	function setIdentification($pIdentification) {
+		$this -> identification = $pIdentification;
+	}
+
+	function Participante($pIdParticipante = "", $pNombre = "", $pApellido = "", $pEmail = "", $pPassword = "", $pIdentification = "", $pImagen = ""){
 		$this -> idParticipante = $pIdParticipante;
 		$this -> nombre = $pNombre;
 		$this -> apellido = $pApellido;
 		$this -> email = $pEmail;
 		$this -> password = $pPassword;
+		$this -> identification = $pIdentification;
 		$this -> imagen = $pImagen;
-		$this -> participanteDAO = new ParticipanteDAO($this -> idParticipante, $this -> nombre, $this -> apellido, $this -> email, $this -> password, $this -> imagen);
+		$this -> participanteDAO = new ParticipanteDAO($this -> idParticipante, $this -> nombre, $this -> apellido, $this -> email, $this -> password, $this -> identification, $this -> imagen);
 		$this -> connection = new Connection();
 	}
 
@@ -81,7 +91,8 @@ class Participante {
 			$this -> apellido = $result[2];
 			$this -> email = $result[3];
 			$this -> password = $result[4];
-			$this -> imagen = $result[5];
+			$this -> identification = $result[5];
+			$this -> imagen = $result[6];
 			$this -> connection -> close();
 			return true;
 		}else{
@@ -142,7 +153,8 @@ class Participante {
 		$this -> apellido = $result[2];
 		$this -> email = $result[3];
 		$this -> password = $result[4];
-		$this -> imagen = $result[5];
+		$this -> identification = $result[5];
+		$this -> imagen = $result[6];
 	}
 
 	function selectAll(){
@@ -150,7 +162,7 @@ class Participante {
 		$this -> connection -> run($this -> participanteDAO -> selectAll());
 		$participantes = array();
 		while ($result = $this -> connection -> fetchRow()){
-			array_push($participantes, new Participante($result[0], $result[1], $result[2], $result[3], $result[4], $result[5]));
+			array_push($participantes, new Participante($result[0], $result[1], $result[2], $result[3], $result[4], $result[5], $result[6]));
 		}
 		$this -> connection -> close();
 		return $participantes;
@@ -161,7 +173,7 @@ class Participante {
 		$this -> connection -> run($this -> participanteDAO -> selectAllOrder($order, $dir));
 		$participantes = array();
 		while ($result = $this -> connection -> fetchRow()){
-			array_push($participantes, new Participante($result[0], $result[1], $result[2], $result[3], $result[4], $result[5]));
+			array_push($participantes, new Participante($result[0], $result[1], $result[2], $result[3], $result[4], $result[5], $result[6]));
 		}
 		$this -> connection -> close();
 		return $participantes;
@@ -172,7 +184,7 @@ class Participante {
 		$this -> connection -> run($this -> participanteDAO -> search($search));
 		$participantes = array();
 		while ($result = $this -> connection -> fetchRow()){
-			array_push($participantes, new Participante($result[0], $result[1], $result[2], $result[3], $result[4], $result[5]));
+			array_push($participantes, new Participante($result[0], $result[1], $result[2], $result[3], $result[4], $result[5], $result[6]));
 		}
 		$this -> connection -> close();
 		return $participantes;
